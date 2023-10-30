@@ -17,12 +17,22 @@ public class UsersController {
         this.userService = userService;
     }
 
+
     @GetMapping("/users")
     public String printUsers(ModelMap modelMap) {
         modelMap.addAttribute("usersList", userService.getAllUsers());
         return "users";
     }
 
+    @GetMapping()
+    public String userById(@RequestParam(value = "id", required = false) Integer id, ModelMap modelMap) {
+        if (id == null) {
+            printUsers(modelMap);
+            return "/users";
+        }
+        modelMap.addAttribute("user", userService.findUserById(id));
+        return "/user";
+    }
 
     @GetMapping(value = "/create")
     public String create(ModelMap modelMap) {
@@ -36,5 +46,10 @@ public class UsersController {
         return "redirect:/users";
     }
 
+    @DeleteMapping()
+    public String deleteUser(@RequestParam(value = "id") Integer id) {
+        userService.deleteUserById(id);
+        return "redirect:/users";
+    }
 }
 
