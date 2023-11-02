@@ -1,14 +1,12 @@
 package web.UserDao;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import web.model.User;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-@Transactional
 public class UserDaoImpl implements UserDao {
 
     @PersistenceContext
@@ -22,7 +20,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User findUserById(int id) {
-        return (User) entityManager.find(User.class, id);
+        return entityManager.find(User.class, id);
     }
 
     @Override
